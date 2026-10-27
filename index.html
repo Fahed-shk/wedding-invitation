@@ -7,6 +7,7 @@
 <title>Shaikh Family · Battiwale Heritage</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="icon" type="image/svg+xml" href="rk-transparent-minimal.png">
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600;700&family=DM+Sans:wght@400;500;600&family=Great+Vibes&display=swap" rel="stylesheet">
 <style>
 :root{--emerald:#073f3b;--deep:#062b2a;--teal:#0d5b53;--gold:#e8c777;--gold2:#b98a3e;--ivory:#fff8e9;--cream:#f3e7cf;--rose:#d88978;--white:#fffdf7;--ink:#18332f;--serif:"Cormorant Garamond",Georgia,serif;--script:"Great Vibes",cursive;--sans:"DM Sans",sans-serif}
@@ -137,7 +138,7 @@
   #page4 .blessing { font-size: .98rem; line-height: 1.5; margin: 10px auto; }
   #page4 .serif[style*="font-style"] { font-size: .94rem !important; line-height: 1.45; }
 
-  #page5 .final-message .script-line { font-size: clamp(3rem, 13vw, 4.1rem); margin: 12px 0; }
+  #page5 .final-message .script-line { font-size: clamp(2rem, 11vw, 2.1rem); margin: 12px 0; }
   #page5 .final-message h2 { font-size: 1.45rem; line-height: 1.25; }
   #page5 .final-message p { font-size: .96rem; line-height: 1.55; margin: 12px auto; }
   #page5 .blessing-quote { font-size: .98rem; line-height: 1.4; padding: 9px 12px; margin: 8px auto 12px; }
@@ -305,15 +306,23 @@
 }
 @media (prefers-reduced-motion: reduce) { .page-home-arrow { animation: none; } }
 /* Keep the business footer visible above the bottom-left home button. */
-#page5 .final-message { padding-bottom: 46px; }
+#page5 .final-message { padding-bottom: 0px; }
 #page5 .final-message .footer-note:last-child { margin-bottom: 8px; }
 @media (max-width: 650px) {
-  #page5 .final-message { padding-bottom: 48px; }
-  .page-home-arrow { bottom: 10px; left: 12px; padding: 6px 9px; gap: 5px; }
+  #page5 .final-message { padding-bottom: 0px; }
+  .page-home-arrow { bottom: 15px; left: 17px; padding: 8px 9px; gap: 5px; }
   .page-home-arrow small { font-size: .64rem; }
 }
 
 
+
+/* Navigation arrows and page dots scroll in-place without changing the URL/history. */
+.welcome-crest { display:flex; flex-direction:column; align-items:center; justify-content:center; gap:2px; line-height:1; overflow:hidden; }
+.welcome-crest small { display:block; max-width:100%; font-size:.48rem !important; line-height:1.05; letter-spacing:.035em !important; white-space:nowrap; }
+@media (max-width:650px) {
+  .welcome-crest { width:62px; height:62px; font-size:1.55rem; margin-bottom:10px; padding:4px; }
+  .welcome-crest small { font-size:.43rem !important; letter-spacing:.02em !important; }
+}
 </style>
 </head>
 <body>
@@ -457,7 +466,7 @@
 <div class="footer-note reveal delay2">बत्तीवाले</div>
 <div class="footer-note reveal delay2">R K Engneering Works.</div>
 </div>
-<a class="page-home-arrow" href="#page1" aria-label="Return to the first invitation page"><span>↑</span><small>Back to start</small></a>
+<a class="page-home-arrow" href="#page1" aria-label="Return to the first invitation page"><span>↑</span></a>
 </section>
 <script>
 /* EDIT YOUR WEDDING DETAILS HERE */
@@ -540,6 +549,19 @@ const pageObserver = new IntersectionObserver(entries=>entries.forEach(entry=>{
 }),{threshold:.45});
 pages.forEach(p=>pageObserver.observe(p));
 
+
+// Keep navigation on the same document: scroll to a slide without changing the URL hash,
+// so the browser Back button does not jump to the previously viewed slide.
+document.querySelectorAll('.nav-dots a, .page-next-arrow, .page-home-arrow').forEach(link => {
+  link.addEventListener('click', event => {
+    const targetId = link.getAttribute('href');
+    if (!targetId || !targetId.startsWith('#')) return;
+    const target = document.querySelector(targetId);
+    if (!target) return;
+    event.preventDefault();
+    target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  });
+});
 </script>
 </body>
 </html>
